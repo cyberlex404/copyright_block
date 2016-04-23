@@ -44,7 +44,6 @@ function copyright_block_block_view($delta = ''){
         case 'copyright_block_copy':
             $block['content'] = copyright_block_content();
             break;
-
     }
     return $block;
 }
@@ -52,7 +51,7 @@ function copyright_block_block_view($delta = ''){
 
 function copyright_block_content(){
     $conf = variable_get('copyright_block_conf', NULL);
-    dpm(array('copy' => $conf));
+
     if(is_null($conf)) {
         return '';
     }
