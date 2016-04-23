@@ -88,6 +88,7 @@ function copyright_block_block_configure($delta = '') {
         $form['copyright_block_conf']['birth_year'] = array(
             '#type' => 'textfield',
             '#title' => t('Year of birth site'),
+            '#maxlength' => 4,
             '#default_value' => isset($conf['birth_year']) ? $conf['birth_year']: '2000',
             //'#description' => ''
         );
