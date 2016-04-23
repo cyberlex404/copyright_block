@@ -1,0 +1,5 @@
+name = Copyright block
+description = It provides copyright block for site.
+core = 7.x
+package = Custom
+configure = admin/config/system/copyright

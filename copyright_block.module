@@ -1,0 +1,105 @@
+<?php
+/**
+* @file
+* A description of what your module does.
+*/
+
+/**
+ * Implements hook_menu().
+ */
+
+function copyright_block_menu() {
+    $items['admin/config/system/copyright'] = array(
+        'title' => 'Config copyright',
+        'description' => 'Config copyright',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('copyright_block_config_form'),
+        'access arguments' => array('administer site configuration'),
+        'file' => 'copyright_block.admin.inc',
+    );
+    return $items;
+
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function copyright_block_block_info() {
+    $blocks['copyright_block_copy'] = array(
+        // info: The name of the block.
+        'info' => t('Copyright block'),
+        // Block caching options (per role, per user, etc.)
+        // DRUPAL_CACHE_PER_ROLE is the default.
+        'cache' => DRUPAL_CACHE_PER_ROLE,
+    );
+    return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function copyright_block_block_view($delta = ''){
+    $block = array();
+    switch ($delta) {
+        case 'copyright_block_copy':
+            $block['content'] = copyright_block_content();
+            break;
+
+    }
+    return $block;
+}
+
+
+function copyright_block_content(){
+    $conf = variable_get('copyright_block_conf', NULL);
+    dpm(array('copy' => $conf));
+    if(is_null($conf)) {
+        return '';
+    }
+    $birth_year = $conf['birth_year'];
+    $current_year = date('Y');
+    $year_string = $current_year;
+    if((int)$birth_year < (int)$current_year) {
+        $year_string = $birth_year . '-' . $current_year;
+    }
+
+    return '<span class="copyright-block">&copy; ' . $year_string . ' ' .$conf['description'] . '</span>';
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function copyright_block_block_configure($delta = '') {
+    $form = array();
+    $conf = variable_get('copyright_block_conf', NULL);
+    if ($delta == 'copyright_block_copy') {
+        $form['copyright_block_conf'] = array(
+            '#type' => 'container',
+            '#title' => t('Copyright'),
+            '#tree' => TRUE,
+        );
+        $form['copyright_block_conf']['description'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Copyright text'),
+            '#default_value' => isset($conf['description'])? $conf['description']: '',
+            //'#description' => ''
+        );
+        // Year of birth site
+        $form['copyright_block_conf']['birth_year'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Year of birth site'),
+            '#default_value' => isset($conf['birth_year']) ? $conf['birth_year']: '2000',
+            //'#description' => ''
+        );
+    }
+    return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function copyright_block_block_save($delta = '', $edit = array()) {
+    if ($delta == 'copyright_block_copy') {
+        variable_set('copyright_block_conf', $edit['copyright_block_conf']);
+    }
+}
