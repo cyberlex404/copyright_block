@@ -1,0 +1,5 @@
+name: Сopyright block
+type: module
+description: My copyright block
+core: 8.x
+package: Custom
