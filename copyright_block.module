@@ -15,7 +15,7 @@ function copyright_block_help($route_name, RouteMatchInterface $route_match) {
     // Main module help for the copyright_block module.
     case 'help.page.copyright_block':
       $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<h3>' . t('About copyright block') . '</h3>';
       $output .= '<p>' . t('My copyright block') . '</p>';
       return $output;
 
