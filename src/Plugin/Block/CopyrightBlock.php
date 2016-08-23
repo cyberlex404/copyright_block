@@ -68,7 +68,7 @@ class CopyrightBlock extends BlockBase {
       $year_str = $year . '-' . date('Y');
     }
     $build = [];
-    $build['copyright_block_year']['#markup'] = '<span> &copy; ' . $year_str . ', ' . $this->configuration['content'] . '</span>';
+    $build['copyright_block_year']['#markup'] = '<span> &copy; ' . $this->configuration['content'] . ', ' .  $year_str. '</span>';
 
     return $build;
   }
