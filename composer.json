@@ -1,6 +1,6 @@
 {
   "name": "cyberlex404/copyright_block",
-  "type": "drupal-module",
+  "type": "drupal-module-custom",
   "description": "My copyright block",
   "keywords": ["Drupal"],
   "license": "GPL-2.0+",
